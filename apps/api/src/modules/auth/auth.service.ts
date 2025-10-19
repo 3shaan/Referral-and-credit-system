@@ -7,9 +7,25 @@ import { UserJwtTokenPayload } from "@/types/payload";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserService } from "../users/user.service";
+import { UserRegisterPayload } from "@repo/validation";
 
 export class AuthService {
   constructor(private readonly userService: UserService) {}
+
+  async register(data: UserRegisterPayload) {
+    const user = await this.userService.register(data);
+
+    const payload = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    };
+    const accessToken = this.generateAccessToken(payload);
+    const refreshToken = this.generateRefreshToken(payload);
+
+    await this.userService.updateRefreshToken(user._id, refreshToken);
+    return { accessToken, refreshToken, user };
+  }
 
   async validateUser(email: string, password: string) {
     const isUserExist = await this.userService.findByEmail(email);

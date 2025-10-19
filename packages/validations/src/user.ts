@@ -17,9 +17,16 @@ export const userloginPayload = userSchema.pick({
   password: true,
 });
 
+export const userRegisterPayload = userSchema.pick({
+  name: true,
+  email: true,
+  password: true,
+});
+
 // types
 
 export type IUser = z.infer<typeof userSchema>;
 export type IUserCreate = z.infer<typeof createUser>;
 export type IUserUpdate = z.infer<typeof updateUser>;
 export type UserLoginPayload = z.infer<typeof userloginPayload>;
+export type UserRegisterPayload = z.infer<typeof userRegisterPayload>;

@@ -8,5 +8,6 @@ const authRoute = Router();
 const authController = new AuthController(new AuthService(new UserService()));
 
 authRoute.use("/auth/login", authController.login);
+authRoute.use("/auth/register", authController.register);
 
 export default authRoute;
