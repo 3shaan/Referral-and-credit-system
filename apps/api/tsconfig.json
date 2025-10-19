@@ -10,7 +10,8 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@validation/*": ["packages/validation/src/index.ts"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types/express/index.d.ts"]
   },
