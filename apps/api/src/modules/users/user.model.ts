@@ -13,7 +13,16 @@ const userSchema = new Schema<IUser>(
     mobile: { type: String, required: false },
     password: { type: String, required: true },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete (ret as Partial<typeof ret>).__v;
+        delete (ret as Partial<typeof ret>).password;
+        return ret;
+      },
+    },
+  },
 );
 
 export const UserModel = model<IUser>("users", userSchema);
