@@ -2,7 +2,6 @@ import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import httpLogger from "./logger";
-import responseHandler from "./middleware/response-handler";
 
 export const createServer = (): Express => {
   const app = express();
@@ -12,10 +11,7 @@ export const createServer = (): Express => {
     .use(express.urlencoded({ extended: true }))
     .use(express.json())
     .use(cors())
-    .use(httpLogger)
-    .get("/status", (_, res) => {
-      return res.json({ ok: true });
-    });
+    .use(httpLogger);
 
   return app;
 };

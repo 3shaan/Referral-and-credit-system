@@ -1,4 +1,5 @@
 import env from "@/env";
+import { HttpException } from "@/lib/exception/http-exception";
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
@@ -33,6 +34,12 @@ const createErrorHandler =
       errorPayload = result;
       message = "Validation failed";
       status = 422;
+    } else if (error instanceof HttpException) {
+      errorPayload = {
+        message: error.message,
+        stack: env.NODE_ENV !== "production" ? error.stack : undefined,
+      };
+      message = error.message;
     } else if (error instanceof Error) {
       errorPayload = {
         message: error.message,
