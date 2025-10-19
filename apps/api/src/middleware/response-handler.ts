@@ -1,4 +1,5 @@
 import env from "@/env";
+import { HttpStatus } from "@/lib/enum/http-status.enum";
 import { HttpException } from "@/lib/exception/http-exception";
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
@@ -20,7 +21,7 @@ const createSuccessHandler =
 
 const createErrorHandler =
   (res: Response) =>
-  (error: unknown, status = 400, msg?: string) => {
+  (error: unknown, status = HttpStatus.BAD_REQUEST, msg?: string) => {
     let message = msg || "Operation failed.";
 
     let errorPayload;
@@ -33,7 +34,7 @@ const createErrorHandler =
 
       errorPayload = result;
       message = "Validation failed";
-      status = 422;
+      status = HttpStatus.UNPROCESSABLE_ENTITY;
     } else if (error instanceof HttpException) {
       errorPayload = {
         message: error.message,
@@ -45,6 +46,7 @@ const createErrorHandler =
         message: error.message,
         stack: env.NODE_ENV !== "production" ? error.stack : undefined,
       };
+      status = HttpStatus.INTERNAL_SERVER_ERROR;
     } else if (typeof error === "string") {
       errorPayload = { message: error };
     } else if (typeof error === "object" && error !== null) {

@@ -12,6 +12,7 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true },
     mobile: { type: String, required: false },
     password: { type: String, required: true },
+    refreshToken: { type: String, required: false },
   },
   {
     timestamps: true,

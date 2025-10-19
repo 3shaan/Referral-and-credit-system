@@ -15,4 +15,15 @@ export class UserService {
   public async findByEmail(email: string): Promise<IUser | null> {
     return UserModel.findOne({ email }).exec();
   }
+
+  public updateRefreshToken(
+    userId: string,
+    refreshToken: string,
+  ): Promise<IUser | null> {
+    return UserModel.findByIdAndUpdate(
+      userId,
+      { refreshToken },
+      { new: true },
+    ).exec();
+  }
 }
