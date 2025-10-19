@@ -2,6 +2,7 @@ import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import httpLogger from "./logger";
+import responseHandler from "./middleware/response-handler";
 
 export const createServer = (): Express => {
   const app = express();
