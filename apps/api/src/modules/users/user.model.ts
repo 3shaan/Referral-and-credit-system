@@ -20,6 +20,7 @@ const userSchema = new Schema<IUser>(
       transform(doc, ret) {
         delete (ret as Partial<typeof ret>).__v;
         delete (ret as Partial<typeof ret>).password;
+        delete (ret as Partial<typeof ret>).refreshToken;
         return ret;
       },
     },

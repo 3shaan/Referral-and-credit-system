@@ -2,6 +2,7 @@ import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import httpLogger from "./logger";
+import cookieParser from "cookie-parser";
 
 export const createServer = (): Express => {
   const app = express();
@@ -11,6 +12,7 @@ export const createServer = (): Express => {
     .use(express.urlencoded({ extended: true }))
     .use(express.json())
     .use(cors())
+    .use(cookieParser())
     .use(httpLogger);
 
   return app;
