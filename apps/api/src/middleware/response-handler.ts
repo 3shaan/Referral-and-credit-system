@@ -2,21 +2,6 @@ import env from "@/env";
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
-const formatZodErrors = (error: ZodError): Record<string, string> => {
-  const formatted: Record<string, string> = {};
-
-  if (Array.isArray(error)) {
-    error.forEach((issue) => {
-      const path = issue.path.join(".");
-      if (path) {
-        formatted[path] = issue.message;
-      }
-    });
-  }
-
-  return formatted;
-};
-
 const createSuccessHandler =
   (res: Response) =>
   (data: any, status = 200, msg?: string) => {
@@ -36,7 +21,6 @@ const createErrorHandler =
   (res: Response) =>
   (error: unknown, status = 400, msg?: string) => {
     let message = msg || "Operation failed.";
-    console.log("errors", error);
 
     let errorPayload;
     if (error instanceof ZodError) {
@@ -48,6 +32,7 @@ const createErrorHandler =
 
       errorPayload = result;
       message = "Validation failed";
+      status = 422;
     } else if (error instanceof Error) {
       errorPayload = {
         message: error.message,
