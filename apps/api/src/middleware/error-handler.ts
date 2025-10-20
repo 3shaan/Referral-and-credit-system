@@ -1,4 +1,4 @@
-import { HttpException } from "@/lib/exception/http-exception";
+import { HttpException } from "@/lib/exception";
 import { NextFunction, Request, Response } from "express";
 
 const errorHandler = (

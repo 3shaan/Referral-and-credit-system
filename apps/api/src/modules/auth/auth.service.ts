@@ -1,8 +1,5 @@
 import env from "@/env";
-import {
-  ForbiddenException,
-  NotFoundException,
-} from "@/lib/exception/http-exception";
+import { ForbiddenException, NotFoundException } from "@/lib/exception";
 import { UserJwtTokenPayload } from "@/types/payload";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";

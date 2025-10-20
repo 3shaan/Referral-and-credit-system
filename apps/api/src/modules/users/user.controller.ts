@@ -2,20 +2,18 @@ import { createUser } from "@repo/validation";
 import { Request, Response } from "express";
 import { UserService } from "./user.service";
 import bcrypt from "bcrypt";
-import { HttpException } from "@/lib/exception/http-exception";
+import { BaseController } from "@/lib/core/base-controller";
 
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UserController extends BaseController {
+  constructor(private readonly userService: UserService) {
+    super();
+  }
 
-  public getAllUsers = async (_req: Request, res: Response): Promise<void> => {
-    try {
-      const users = await this.userService.findAll();
-      res.success(users, 200, "Users fetched successfully");
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      res.error(error, 500);
-    }
-  };
+  async getAllUsers(_req: Request, res: Response) {
+    const users = await this.userService.findAll();
+    return users;
+    // res.success(users, 200, "Users fetched successfully");
+  }
 
   public createUser = async (req: Request, res: Response): Promise<void> => {
     try {

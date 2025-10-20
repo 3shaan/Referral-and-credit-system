@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AuthService } from "./auth.service";
 import { userloginPayload, userRegisterPayload } from "@repo/validation";
-import { HttpStatus } from "@/lib/enum/http-status.enum";
+import { HttpStatus } from "@/lib/http";
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

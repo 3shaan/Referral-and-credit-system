@@ -1,4 +1,4 @@
-import { HttpStatus } from "../enum/http-status.enum";
+import { HttpStatus } from "../http/http-status";
 
 export class HttpException extends Error {
   public readonly statusCode: number;

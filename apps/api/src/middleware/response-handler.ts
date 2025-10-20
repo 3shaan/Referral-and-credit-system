@@ -1,6 +1,6 @@
 import env from "@/env";
-import { HttpStatus } from "@/lib/enum/http-status.enum";
-import { HttpException } from "@/lib/exception/http-exception";
+import { HttpStatus } from "@/lib/http";
+import { HttpException } from "@/lib/exception";
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 
@@ -41,6 +41,7 @@ const createErrorHandler =
         stack: env.NODE_ENV !== "production" ? error.stack : undefined,
       };
       message = error.message;
+      status = error.statusCode;
     } else if (error instanceof Error) {
       errorPayload = {
         message: error.message,

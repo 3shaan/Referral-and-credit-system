@@ -1,8 +1,5 @@
 import env from "@/env";
-import {
-  ForbiddenException,
-  UnauthorizedException,
-} from "@/lib/exception/http-exception";
+import { ForbiddenException, UnauthorizedException } from "@/lib/exception";
 import { UserJwtTokenPayload } from "@/types/payload";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";

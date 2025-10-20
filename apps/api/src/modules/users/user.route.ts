@@ -6,7 +6,7 @@ import { authHandler } from "@/middleware/auth-handler";
 const userRouter = Router();
 const userController = new UserController(new UserService());
 
-userRouter.use(authHandler);
+userRouter.use("/users", authHandler);
 
 userRouter
   .route("/users")

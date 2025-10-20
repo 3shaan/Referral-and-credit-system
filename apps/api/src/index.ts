@@ -4,7 +4,7 @@ import { log } from "./logger";
 import { createServer } from "./server";
 import appRoute from "./modules/app.route";
 import errorHandler from "./middleware/error-handler";
-import { NotFoundException } from "./lib/exception/http-exception";
+import { NotFoundException } from "./lib/exception";
 
 const port = env.PORT || 8080;
 
