@@ -6,6 +6,14 @@ export const userSchema = z.object({
   mobile: z.string().min(10).max(15).optional(),
   password: z.string().min(6).max(100),
   refreshToken: z.string().min(10).max(100).optional(),
+  userName: z.string().min(2).max(100),
+  referredBy: z.string().min(2).max(100).optional(),
+  stats: z.object({
+    totalReferred: z.number().min(0).default(0),
+    convertedReferred: z.number().min(0).default(0),
+  }),
+  createdAt: z.date().default(new Date()),
+  updatedAt: z.date().default(new Date()),
 });
 
 export const createUser = userSchema.omit({ _id: true, refreshToken: true });
@@ -21,6 +29,8 @@ export const userRegisterPayload = userSchema.pick({
   name: true,
   email: true,
   password: true,
+  userName: true,
+  referredBy: true
 });
 
 // types

@@ -3,10 +3,10 @@ import type { Document } from "mongoose";
 
 import { model, Schema } from "mongoose";
 
-export type User = {
+export interface User extends Document {
   name: string;
   email: string;
-} & Document;
+}
 
 const userSchema = new Schema<IUser>(
   {
@@ -15,6 +15,13 @@ const userSchema = new Schema<IUser>(
     mobile: { type: String, required: false },
     password: { type: String, required: true },
     refreshToken: { type: String, required: false },
+    userName: { type: String, required: true, unique: true },
+    referredBy: { type: String, required: false },
+    stats: {
+      totalReferred: { type: Number, default: 0 },
+      convertedReferred: { type: Number, default: 0 },
+    },
+
   },
   {
     timestamps: true,
