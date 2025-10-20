@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
+
 import { HttpStatus } from "@/lib/http";
 
 // BaseController.ts (same pattern)
@@ -22,11 +23,15 @@ export abstract class BaseController {
     let proto = Object.getPrototypeOf(this);
     while (proto && proto !== Object.prototype) {
       for (const name of Object.getOwnPropertyNames(proto)) {
-        if (name === "constructor") continue;
-        if (Object.prototype.hasOwnProperty.call(this, name)) continue;
+        if (name === "constructor")
+          continue;
+        if (Object.prototype.hasOwnProperty.call(this, name))
+          continue;
         const desc = Object.getOwnPropertyDescriptor(proto, name);
-        if (!desc || typeof desc.value !== "function") continue;
+        if (!desc || typeof desc.value !== "function")
+          continue;
         Object.defineProperty(this, name, {
+          // eslint-disable-next-line ts/no-unsafe-function-type
           value: (desc.value as Function).bind(this),
           writable: true,
           configurable: true,
@@ -36,6 +41,7 @@ export abstract class BaseController {
     }
   }
 
+  // eslint-disable-next-line ts/no-unsafe-function-type
   private wrapMethod(fn: Function) {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -44,7 +50,8 @@ export abstract class BaseController {
         if (!res.headersSent && result !== undefined) {
           res.success(result, HttpStatus.OK);
         }
-      } catch (err) {
+      }
+      catch (err) {
         console.error(`[${fn.name}] Error:`, err);
 
         if (!res.headersSent) {

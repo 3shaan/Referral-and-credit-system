@@ -1,4 +1,5 @@
 import { pinoHttp } from "pino-http";
+
 import env from "./env";
 
 const httpLogger = pinoHttp({

@@ -1,10 +1,13 @@
-import express, { type Express } from "express";
-import morgan from "morgan";
-import cors from "cors";
-import httpLogger from "./logger";
-import cookieParser from "cookie-parser";
+import type { Express } from "express";
 
-export const createServer = (): Express => {
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import express from "express";
+import morgan from "morgan";
+
+import httpLogger from "./logger";
+
+export function createServer(): Express {
   const app = express();
   app
     .disable("x-powered-by")
@@ -16,4 +19,4 @@ export const createServer = (): Express => {
     .use(httpLogger);
 
   return app;
-};
+}

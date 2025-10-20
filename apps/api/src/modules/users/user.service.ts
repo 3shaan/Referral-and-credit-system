@@ -1,4 +1,5 @@
-import { IUser, IUserCreate, UserRegisterPayload } from "@repo/validation";
+import type { IUser, IUserCreate, UserRegisterPayload } from "@repo/validation";
+
 import { UserModel } from "./user.model";
 
 // Note: No changes needed in the service itself for this DI implementation.

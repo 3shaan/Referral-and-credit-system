@@ -1,18 +1,20 @@
+import type { Request, Response } from "express";
+
 import { createUser } from "@repo/validation";
-import { Request, Response } from "express";
-import { UserService } from "./user.service";
 import bcrypt from "bcrypt";
+
 import { BaseController } from "@/lib/core/base-controller";
+
+import type { UserService } from "./user.service";
 
 export class UserController extends BaseController {
   constructor(private readonly userService: UserService) {
     super();
   }
 
-  async getAllUsers(_req: Request, res: Response) {
+  async getAllUsers() {
     const users = await this.userService.findAll();
     return users;
-    // res.success(users, 200, "Users fetched successfully");
   }
 
   public createUser = async (req: Request, res: Response): Promise<void> => {
@@ -40,7 +42,8 @@ export class UserController extends BaseController {
       });
 
       res.success(user, 201, "User created successfully");
-    } catch (error) {
+    }
+    catch (error) {
       res.error(error, 500);
     }
   };

@@ -1,10 +1,12 @@
-import { Schema, model, Document } from "mongoose";
-import { IUser } from "@repo/validation";
+import type { IUser } from "@repo/validation";
+import type { Document } from "mongoose";
 
-export interface User extends Document {
+import { model, Schema } from "mongoose";
+
+export type User = {
   name: string;
   email: string;
-}
+} & Document;
 
 const userSchema = new Schema<IUser>(
   {

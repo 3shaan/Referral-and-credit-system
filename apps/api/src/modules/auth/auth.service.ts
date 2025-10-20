@@ -1,10 +1,14 @@
-import env from "@/env";
-import { ForbiddenException, NotFoundException } from "@/lib/exception";
-import { UserJwtTokenPayload } from "@/types/payload";
+import type { UserRegisterPayload } from "@repo/validation";
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { UserService } from "../users/user.service";
-import { UserRegisterPayload } from "@repo/validation";
+
+import type { UserJwtTokenPayload } from "@/types/payload";
+
+import env from "@/env";
+import { ForbiddenException, NotFoundException } from "@/lib/exception";
+
+import type { UserService } from "../users/user.service";
 
 export class AuthService {
   constructor(private readonly userService: UserService) {}
@@ -26,13 +30,15 @@ export class AuthService {
 
   async validateUser(email: string, password: string) {
     const isUserExist = await this.userService.findByEmail(email);
-    if (!isUserExist) throw new NotFoundException("User not found");
+    if (!isUserExist)
+      throw new NotFoundException("User not found");
 
     const isPasswordValid = await bcrypt.compare(
       password,
       isUserExist.password,
     );
-    if (!isPasswordValid) throw new ForbiddenException("Invalid password");
+    if (!isPasswordValid)
+      throw new ForbiddenException("Invalid password");
 
     return isUserExist;
   }

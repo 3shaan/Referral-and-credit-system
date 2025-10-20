@@ -1,9 +1,11 @@
-import e from "express";
-import userRouter from "./users/user.route";
-import responseHandler from "@/middleware/response-handler";
-import authRoute from "./auth/auth.route";
+import type e from "express";
 
-const rootRouter = (app: e.Express) => {
+import responseHandler from "@/middleware/response-handler";
+
+import authRoute from "./auth/auth.route";
+import userRouter from "./users/user.route";
+
+function rootRouter(app: e.Express) {
   // a middleware to inject res.success and res.error
   app.use(responseHandler);
 
@@ -12,6 +14,6 @@ const rootRouter = (app: e.Express) => {
   const routeArr = [userRouter, authRoute];
 
   app.use(prefix, ...routeArr);
-};
+}
 
 export default rootRouter;

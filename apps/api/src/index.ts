@@ -1,10 +1,10 @@
 import { connectDB } from "./config/database.config";
 import env from "./env";
-import { log } from "./logger";
-import { createServer } from "./server";
-import appRoute from "./modules/app.route";
-import errorHandler from "./middleware/error-handler";
 import { NotFoundException } from "./lib/exception";
+import { log } from "./logger";
+import errorHandler from "./middleware/error-handler";
+import appRoute from "./modules/app.route";
+import { createServer } from "./server";
 
 const port = env.PORT || 8080;
 
@@ -28,7 +28,8 @@ async function bootstrap() {
 
   server.listen(port, () => {
     log.info(`api running on ${port}`);
-    console.log(`api running on http://localhost:${port}`);
+    // eslint-disable-next-line no-console
+    console.info(`api running on http://localhost:${port}`);
   });
 }
 bootstrap();

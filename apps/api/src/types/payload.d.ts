@@ -1,5 +1,5 @@
-export interface UserJwtTokenPayload {
+export type UserJwtTokenPayload = {
   _id: string;
   email: string;
   name: string;
-}
+};

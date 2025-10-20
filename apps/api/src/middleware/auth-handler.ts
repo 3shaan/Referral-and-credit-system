@@ -1,24 +1,24 @@
+import type { NextFunction, Request, Response } from "express";
+
+import jwt from "jsonwebtoken";
+
+import type { UserJwtTokenPayload } from "@/types/payload";
+
 import env from "@/env";
 import { ForbiddenException, UnauthorizedException } from "@/lib/exception";
-import { UserJwtTokenPayload } from "@/types/payload";
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { log } from "@/logger";
 
 const ACCESS_TOKEN_COOKIE_NAME = "accessToken";
 
-interface AuthenticatedRequest extends Request {
+type AuthenticatedRequest = {
   user?: UserJwtTokenPayload;
-}
+} & Request;
 
-export const authHandler = (
-  req: AuthenticatedRequest,
-  _res: Response,
-  next: NextFunction,
-) => {
+export function authHandler(req: AuthenticatedRequest, _res: Response, next: NextFunction) {
   let token: string | undefined = req.cookies[ACCESS_TOKEN_COOKIE_NAME];
 
   if (!token) {
-    const authHeader = req.headers["authorization"];
+    const authHeader = req.headers.authorization;
     // Format: "Bearer <token>"
     if (authHeader && authHeader.startsWith("Bearer ")) {
       token = authHeader.split(" ")[1];
@@ -35,7 +35,9 @@ export const authHandler = (
     req.user = decoded as UserJwtTokenPayload;
 
     next();
-  } catch (err) {
+  }
+  catch (err) {
+    log.error(err);
     throw new ForbiddenException("Access Denied: Invalid or expired token.");
   }
-};
+}

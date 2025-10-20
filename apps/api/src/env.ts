@@ -2,6 +2,7 @@ import type { ZodError } from "zod";
 
 import { config } from "dotenv";
 import { expand } from "dotenv-expand";
+import process from "node:process";
 import { z } from "zod";
 
 expand(config());
@@ -20,9 +21,10 @@ type Env = z.infer<typeof EnvSchema>;
 let env: Env;
 
 try {
-  // eslint-disable-next-line node/no-process-env
+  // eslint-disable-next-line   node/no-process-env
   env = EnvSchema.parse(process.env);
-} catch (error) {
+}
+catch (error) {
   const e = error as ZodError;
   console.error("Invalid ENV. ");
   console.error(e.issues);

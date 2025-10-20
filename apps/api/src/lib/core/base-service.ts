@@ -11,16 +11,20 @@ export abstract class BaseService {
     while (proto && proto !== Object.prototype) {
       const names = Object.getOwnPropertyNames(proto);
       for (const name of names) {
-        if (name === "constructor") continue;
+        if (name === "constructor")
+          continue;
 
         // skip if already an own property (arrow methods / instance props)
-        if (Object.prototype.hasOwnProperty.call(this, name)) continue;
+        if (Object.prototype.hasOwnProperty.call(this, name))
+          continue;
 
         const desc = Object.getOwnPropertyDescriptor(proto, name);
         // only bind real functions (not getters/setters)
-        if (!desc || typeof desc.value !== "function") continue;
+        if (!desc || typeof desc.value !== "function")
+          continue;
 
         Object.defineProperty(this, name, {
+          // eslint-disable-next-line ts/no-unsafe-function-type
           value: (desc.value as Function).bind(this),
           writable: true,
           configurable: true,

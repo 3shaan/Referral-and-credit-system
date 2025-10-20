@@ -1,4 +1,4 @@
-import { Response } from "express";
+import type { Response } from "express";
 
 // Define the standard shape of your API responses for consistency
 interface ApiResponse {
@@ -7,7 +7,7 @@ interface ApiResponse {
   success: boolean;
   message: string;
   error: any | null;
-}
+};
 
 // 1. Export AppResponse to use explicitly in function signatures (recommended for safety)
 export interface AppResponse extends Response {

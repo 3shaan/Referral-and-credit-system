@@ -1,7 +1,10 @@
-import { Request, Response } from "express";
-import { AuthService } from "./auth.service";
+import type { Request, Response } from "express";
+
 import { userloginPayload, userRegisterPayload } from "@repo/validation";
+
 import { HttpStatus } from "@/lib/http";
+
+import type { AuthService } from "./auth.service";
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -14,9 +17,9 @@ export class AuthController {
       // TODO : add more configuration in cookies when publish
       res.cookie("refreshToken", token.refreshToken, { httpOnly: true });
       res.cookie("accessToken", token.accessToken, { httpOnly: true });
-
       res.success(token.user, HttpStatus.OK, "Register successful");
-    } catch (error) {
+    }
+    catch (error) {
       res.error(error);
     }
   };
@@ -31,7 +34,8 @@ export class AuthController {
       res.cookie("accessToken", token.accessToken, { httpOnly: true });
 
       res.success(token.user, HttpStatus.OK, "Login successful");
-    } catch (error) {
+    }
+    catch (error) {
       res.error(error);
     }
   };
