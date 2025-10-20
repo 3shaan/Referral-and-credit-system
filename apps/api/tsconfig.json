@@ -5,17 +5,34 @@
     "rootDir": "src",
     "module": "CommonJS",
     "paths": {
-      "@/*": ["src/*"],
-      "@validation/*": ["packages/validation/src/index.ts"]
+      "@/*": [
+        "src/*"
+      ],
+      "@validation/*": [
+        "packages/validation/src/index.ts"
+      ]
     },
-    "typeRoots": ["./node_modules/@types", "./src/types/express/index.d.ts"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types/express/index.d.ts"
+    ],
     "strict": true,
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noEmitOnError": true
   },
-  "files": ["./src/types/express/index.d.ts"],
-  "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
-  "exclude": ["node_modules"]
+  "files": [
+    "./src/types/express/index.d.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
