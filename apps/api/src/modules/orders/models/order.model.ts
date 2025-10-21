@@ -3,7 +3,7 @@ import type { Order } from "@repo/validation";
 import { model, Schema, Types } from "mongoose";
 
 export const OrderMongoDbSchema = new Schema({
-  userID: {
+  userId: {
     type: Types.ObjectId,
     required: true,
   },
