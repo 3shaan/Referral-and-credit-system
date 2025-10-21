@@ -10,9 +10,7 @@ export const orderItemSchema = z.object({
   price: z.coerce.number().min(0),
 })
 
-export const createOrderItemSchema = orderItemSchema.omit({ _id: true });
 
 // types
 
 export type OrderItem = z.infer<typeof orderItemSchema>;
-export type CreateOrderItem = z.infer<typeof createOrderItemSchema>;
