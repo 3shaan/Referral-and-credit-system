@@ -1,14 +1,16 @@
-'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import MobileMenu from './navbar/mobile-menu';
+import MobileMenuButton from './navbar/mobile-menu-button';
+import { getCurrentUser } from '@/action/users';
+import { Activity } from 'react';
 
-export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default async function Navbar() {
   const navItems = [
     { label: 'Home', href: '#' },
     { label: 'Products', href: '#products' },
     { label: 'Referrals', href: '#' },
   ];
+  const authUser = await getCurrentUser()
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -28,42 +30,29 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/signin">
-              <button type="button" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Sign In</button>
-            </Link>
+            <Activity mode={authUser?._id ? "hidden" : "visible"}>
+              <Link href="/signin">
+                <button type="button" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Sign In</button>
+              </Link>
+            </Activity>
+            <Activity mode={authUser?._id ? "visible" : "hidden"}>
+              <Link href="/dashboard">
+                <button type="button" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Dashboard</button>
+              </Link>
+            </Activity>
+
 
           </div>
 
           {/* Mobile menu button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-gray-700"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
+          <MobileMenuButton />
+
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {
-              navItems.map(item => (
-                <Link key={item.label} href={item.href} className="block px-3 py-2 text-gray-700 hover:bg-indigo-50 rounded">{item.label}</Link>
-              ))
-            }
+      <MobileMenu navItems={navItems} />
 
-            <div className="px-3 py-2 space-y-2">
-              <button type="button" className="w-full text-left text-gray-700">Sign In</button>
-
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 }

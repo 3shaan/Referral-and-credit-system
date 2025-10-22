@@ -1,6 +1,16 @@
+'use server'
+import env from "@/env";
 import { api, ApiResponse } from "@/lib/api";
 import { IUser } from "@repo/validation";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export async function isUserLoggedIn(): Promise<ApiResponse<IUser>> {
-  return api.get("/proxy/api/me", { cache: "no-store" })
+export async function getCurrentUser(): Promise<IUser> {
+  const accessToken = (await cookies()).get("accessToken")
+  const res = await fetch(env.NEXT_PUBLIC_API_URL + "/me", { credentials: 'include', headers: { Authorization: `Bearer ${accessToken?.value}` } })
+  const authUser = await res.json()
+  if (!authUser.data) {
+    redirect("/signin")
+  }
+  return authUser.data as IUser;
 }
