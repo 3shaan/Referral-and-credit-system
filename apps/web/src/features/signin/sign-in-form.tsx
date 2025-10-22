@@ -7,9 +7,13 @@ import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { Activity, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { login } from '@/action/auth';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
 
   const {
     register,
@@ -22,6 +26,15 @@ export default function SignInForm() {
   });
 
   const onSubmit = async (data: UserLoginPayload) => {
+    const result = await login(data.email, data.password);
+    if (result.success) {
+      toast.success(result.message)
+      router.push("/")
+    } else {
+      toast.error(result.message)
+    }
+
+
   };
 
   return (
@@ -41,7 +54,7 @@ export default function SignInForm() {
             {...register('email', {
               required: 'Email is required',
             })}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition ${errors.email ? 'border-red-500' : 'border-gray-300'
+            className={`w-full text-black px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition ${errors.email ? 'border-red-500' : 'border-gray-300'
               }`}
             placeholder="you@example.com"
           />
@@ -63,7 +76,7 @@ export default function SignInForm() {
               {...register('password', {
                 required: 'Password is required',
               })}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition pr-12 ${errors.password ? 'border-red-500' : 'border-gray-300'
+              className={`w-full text-black px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition pr-12 ${errors.password ? 'border-red-500' : 'border-gray-300'
                 }`}
               placeholder="Enter your password"
             />
