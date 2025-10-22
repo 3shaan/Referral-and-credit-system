@@ -4,6 +4,7 @@ import Navbar from '@/features/landing-page/navbar';
 import { ProductSection } from '@/features/landing-page/product-section';
 
 export default function Home() {
+  const a = '';
   return (
     <div>
       <Navbar />
