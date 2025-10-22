@@ -1,7 +1,6 @@
 'use server'
 import env from "@/env";
-import { api, ApiResponse } from "@/lib/api";
-import { IUser } from "@repo/validation";
+import type { IUser } from "@repo/validation";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
