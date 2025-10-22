@@ -1,5 +1,9 @@
+import Navbar from '@/features/landing-page/navbar';
+
 export default function Home() {
   return (
-    <div></div>
+    <div>
+      <Navbar />
+    </div>
   );
 }
