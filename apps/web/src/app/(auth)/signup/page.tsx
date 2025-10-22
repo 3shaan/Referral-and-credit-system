@@ -1,7 +1,10 @@
 import SignupForm from "@/features/signup/signup-form";
 import { Gift } from "lucide-react";
 
-export default function SignUp() {
+
+
+export default async function SignUp({ searchParams }: { searchParams: Promise<{ r?: string }> }) {
+  const referCode = (await searchParams).r
   return (
     <div>
       <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center p-4">
@@ -13,7 +16,7 @@ export default function SignUp() {
             <h1 className="text-4xl font-bold text-white mb-2">RewardShop</h1>
             <p className="text-purple-100">Join and start earning rewards today!</p>
           </div>
-          <SignupForm />
+          <SignupForm referCode={referCode} />
 
           <p className="mt-6 text-center text-sm text-purple-100">
             By signing up, you agree to our Terms and Privacy Policy

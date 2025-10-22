@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 
-export default function SignupForm() {
+export default function SignupForm({ referCode }: { referCode: string | undefined }) {
   const router = useRouter()
 
   const {
@@ -20,6 +20,13 @@ export default function SignupForm() {
     formState: { errors, isSubmitting },
   } = useForm<UserRegisterPayload>({
     resolver: zodResolver(userRegisterPayload),
+    defaultValues: {
+      email: "",
+      name: "",
+      password: "",
+      userName: "",
+      referredBy: referCode,
+    },
   });
 
   const onSubmit = async (data: UserRegisterPayload) => {
@@ -73,7 +80,7 @@ export default function SignupForm() {
               {...register('userName')}
               id="userName"
               type="text"
-              className={`w-full text-black pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition ${errors.username ? 'border-red-500' : 'border-gray-300'
+              className={`w-full text-black pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition ${errors.userName ? 'border-red-500' : 'border-gray-300'
                 }`}
               placeholder="johndoe123"
             />
