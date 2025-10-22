@@ -12,11 +12,12 @@ export const userSchema = z.object({
     totalReferred: z.number().min(0).default(0),
     convertedReferred: z.number().min(0).default(0),
   }),
+  credit: z.coerce.number().default(0),
   createdAt: z.date().default(new Date()),
   updatedAt: z.date().default(new Date()),
 });
 
-export const createUser = userSchema.omit({ _id: true, refreshToken: true });
+export const createUser = userSchema.omit({ _id: true, refreshToken: true, credit: true });
 
 export const updateUser = userSchema.omit({ _id: true, refreshToken: true });
 

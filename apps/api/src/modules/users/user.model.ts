@@ -21,6 +21,7 @@ const userSchema = new Schema<IUser>(
       totalReferred: { type: Number, default: 0 },
       convertedReferred: { type: Number, default: 0 },
     },
+    credit: { type: Number, default: 0 },
 
   },
   {

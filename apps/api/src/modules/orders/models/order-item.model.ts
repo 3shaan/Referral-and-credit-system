@@ -3,12 +3,12 @@ import type { OrderItem } from "@repo/validation";
 import { model, Schema, Types } from "mongoose";
 
 const orderItemMongoDbSchema = new Schema({
-  orderID: {
+  orderId: {
     type: Types.ObjectId,
     required: true,
     ref: "orders",
   },
-  productID: {
+  productId: {
     type: Types.ObjectId,
     required: true,
     ref: "products",
