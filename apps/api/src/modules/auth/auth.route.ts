@@ -11,5 +11,6 @@ const authController = new AuthController(new AuthService(new UserService(new Re
 
 authRoute.use("/auth/login", authController.login);
 authRoute.use("/auth/register", authController.register);
+authRoute.use("/auth/refresh-token", authController.accessTokenRevalidate);
 
 export default authRoute;

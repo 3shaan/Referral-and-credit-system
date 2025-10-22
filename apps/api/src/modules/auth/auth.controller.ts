@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import { HttpStatus } from "@/lib/http";
 
 import type { AuthService } from "./auth.service";
+import { UnauthorizedException } from "@/lib/exception";
 
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
@@ -43,6 +44,24 @@ export class AuthController {
       res.cookie("accessToken", token.accessToken, { httpOnly: true });
 
       res.success(token.user, HttpStatus.OK, "Login successful");
+    }
+    catch (error) {
+      res.error(error);
+    }
+  };
+
+  accessTokenRevalidate = async (req: Request, res: Response) => {
+    try {
+      const refreshToken = req.cookies.refreshToken;
+      if (!refreshToken) {
+        throw new UnauthorizedException("Refresh token not found");
+      }
+      const accessToken = this.authService.revalidateAccessTokenByRefreshToken(refreshToken);
+
+      // TODO : add more configuration in cookies when publish
+      res.cookie("accessToken", accessToken, { httpOnly: true });
+
+      res.success(null, HttpStatus.OK, "Access token revalidated");
     }
     catch (error) {
       res.error(error);

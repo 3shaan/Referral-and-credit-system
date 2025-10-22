@@ -9,6 +9,8 @@ import { UserService } from "./user.service";
 const userRouter = Router();
 const userController = new UserController(new UserService(new ReferralService()));
 
+userRouter.get("/me", authHandler, userController.me);
+
 userRouter.use("/users", authHandler);
 
 userRouter

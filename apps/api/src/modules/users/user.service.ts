@@ -58,6 +58,10 @@ export class UserService extends BaseService {
     return UserModel.findOne({ email }).exec();
   }
 
+  public async findById(id: string): Promise<IUser | null> {
+    return UserModel.findById(id).exec();
+  }
+
   public async findByUserName(userName: string): Promise<IUser | null> {
     return UserModel.findOne({ userName }).exec();
   }
@@ -83,4 +87,6 @@ export class UserService extends BaseService {
       { new: true },
     ).exec();
   }
+
+
 }

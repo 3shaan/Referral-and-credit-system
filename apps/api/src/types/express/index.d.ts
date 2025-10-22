@@ -21,5 +21,8 @@ declare global {
       success: (data: any, status?: number, msg?: string) => void;
       error: (error: unknown, status?: number, msg?: string) => void;
     }
+    interface Request {
+      user?: UserJwtTokenPayload;
+    }
   }
 }

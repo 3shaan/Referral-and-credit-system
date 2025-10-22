@@ -11,7 +11,7 @@ import { ForbiddenException, NotFoundException } from "@/lib/exception";
 import type { UserService } from "../users/user.service";
 
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   async register(data: UserRegisterPayload) {
     const user = await this.userService.register(data);
@@ -69,4 +69,11 @@ export class AuthService {
     await this.userService.updateRefreshToken(user._id, refreshToken);
     return { accessToken, refreshToken, user };
   }
+
+  revalidateAccessTokenByRefreshToken(refreshToken: string) {
+    const payload = jwt.verify(refreshToken, env.JWT_SECRET) as UserJwtTokenPayload;
+    const accessToken = this.generateAccessToken(payload);
+    return accessToken;
+  }
+
 }

@@ -6,6 +6,9 @@ import bcrypt from "bcrypt";
 import { BaseController } from "@/lib/core/base-controller";
 
 import type { UserService } from "./user.service";
+import { UserJwtTokenPayload } from "@/types/payload";
+import { th } from "zod/v4/locales";
+import { UnauthorizedException } from "@/lib/exception";
 
 export class UserController extends BaseController {
   constructor(private readonly userService: UserService) {
@@ -42,6 +45,22 @@ export class UserController extends BaseController {
       });
 
       res.success(user, 201, "User created successfully");
+    }
+    catch (error) {
+      res.error(error, 500);
+    }
+  };
+
+
+  public me = async (req: Request, res: Response): Promise<void> => {
+    try {
+      if (!req?.user) {
+        throw new UnauthorizedException("Unauthorized user")
+      }
+      const userData = req.user as UserJwtTokenPayload
+      const user = await this.userService.findById(userData._id);
+
+      res.success(user, 200, "User retrieved successfully");
     }
     catch (error) {
       res.error(error, 500);
