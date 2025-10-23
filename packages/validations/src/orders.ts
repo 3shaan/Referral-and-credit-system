@@ -14,7 +14,11 @@ export const OrderWithItemsSchema = orderSchema.extend({
   orderItems: z.array(orderItemSchema).min(1),
 });
 
-export const createOrderSchema = orderSchema.omit({ _id: true, isFirstOrder: true, status: true }).extend({
+export const createOrderSchema = z.object({
+  orderItems: z.array(orderItemSchema.omit({ _id: true, orderId: true, })).min(1),
+});
+
+const savedOrderSchema = orderSchema.omit({ _id: true, isFirstOrder: true, status: true }).extend({
   orderItems: z.array(orderItemSchema.omit({ _id: true, orderId: true, })).min(1),
 });
 
@@ -24,3 +28,6 @@ export type Order = z.infer<typeof orderSchema>;
 export type CreateOrder = z.infer<typeof createOrderSchema>;
 
 export type OrderWithItems = z.infer<typeof OrderWithItemsSchema>;
+export type CreateOrderWithItems = z.infer<typeof OrderWithItemsSchema>;
+
+export type SavedOrder = z.infer<typeof savedOrderSchema>;

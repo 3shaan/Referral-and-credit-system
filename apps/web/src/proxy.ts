@@ -33,5 +33,5 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
 }
 
 export const config = {
-  matcher: ['/', '/dashboard'],
+  matcher: ['/', '/dashboard', '/cart'],
 };

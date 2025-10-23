@@ -1,4 +1,4 @@
-import type { CreateOrder } from "@repo/validation";
+import type { SavedOrder } from "@repo/validation";
 
 import { startSession } from "mongoose";
 
@@ -14,7 +14,7 @@ export class OrderService extends BaseService {
     return OrderModel.find().populate("orderItems").exec();
   }
 
-  async create(data: CreateOrder) {
+  async create(data: SavedOrder) {
     const session = await startSession();
     session.startTransaction(); // transaction, so that if error occurs, it will be rolled back
     try {

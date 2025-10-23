@@ -1,5 +1,7 @@
 import type { Response } from "express";
 
+import type { UserJwtTokenPayload } from "../payload";
+
 // Define the standard shape of your API responses for consistency
 interface ApiResponse {
   data: any | null;
