@@ -3,10 +3,10 @@ import type { Request, Response } from "express";
 import { userloginPayload, userRegisterPayload } from "@repo/validation";
 import bcrypt from "bcrypt";
 
+import { UnauthorizedException } from "@/lib/exception";
 import { HttpStatus } from "@/lib/http";
 
 import type { AuthService } from "./auth.service";
-import { UnauthorizedException } from "@/lib/exception";
 
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
@@ -25,8 +25,16 @@ export class AuthController {
       });
 
       // TODO : add more configuration in cookies when publish
-      res.cookie("refreshToken", token.refreshToken, { httpOnly: true });
-      res.cookie("accessToken", token.accessToken, { httpOnly: true });
+      res.cookie("refreshToken", token.refreshToken, {
+        httpOnly: true,
+        maxAge: 3600000 * 24 * 15, // 15 days
+
+      });
+
+      res.cookie("accessToken", token.accessToken, {
+        httpOnly: true,
+        maxAge: 3600000, // 1 hour
+      });
       res.success(token.user, HttpStatus.OK, "Register successful");
     }
     catch (error) {
@@ -40,8 +48,8 @@ export class AuthController {
       const token = await this.authService.login(email, password);
 
       // TODO : add more configuration in cookies when publish
-      res.cookie("refreshToken", token.refreshToken, { httpOnly: true });
-      res.cookie("accessToken", token.accessToken, { httpOnly: true });
+      res.cookie("refreshToken", token.refreshToken, { httpOnly: true, maxAge: 3600000 * 24 * 15 }); // 15 days
+      res.cookie("accessToken", token.accessToken, { httpOnly: true, maxAge: 3600000 }); // 1 hour
 
       res.success(token.user, HttpStatus.OK, "Login successful");
     }
@@ -52,16 +60,16 @@ export class AuthController {
 
   accessTokenRevalidate = async (req: Request, res: Response) => {
     try {
-      const refreshToken = req.cookies.refreshToken;
+      const refreshToken = req.cookies.refreshToken || req.headers.authorization?.split(" ")[1];
       if (!refreshToken) {
         throw new UnauthorizedException("Refresh token not found");
       }
       const accessToken = this.authService.revalidateAccessTokenByRefreshToken(refreshToken);
 
       // TODO : add more configuration in cookies when publish
-      res.cookie("accessToken", accessToken, { httpOnly: true });
+      res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 3600000 /* 1hr */ });
 
-      res.success(null, HttpStatus.OK, "Access token revalidated");
+      res.success({ accessToken }, HttpStatus.OK, "Access token revalidated");
     }
     catch (error) {
       res.error(error);

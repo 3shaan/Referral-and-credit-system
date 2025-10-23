@@ -1,5 +1,7 @@
 import { cookies } from 'next/headers';
 
+import env from '@/env';
+
 // access token
 export async function getAccessToken() {
   return (await cookies()).get('accessToken')?.value;
@@ -20,12 +22,14 @@ export async function getRefreshToken() {
 }
 
 export async function getAccessTokenByRefreshToken() {
-  const response = await fetch(`proxy/api/auth/refresh-token`, {
+  const response = await fetch(`${env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${await getRefreshToken()}`,
     },
+    credentials: 'include',
   });
   const data = await response.json();
+  console.log(data);
   return data.data;
 }

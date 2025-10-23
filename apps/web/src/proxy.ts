@@ -20,7 +20,7 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
 
   if (!accessToken) {
     const accessTokenByRefreshToken = await getAccessTokenByRefreshToken();
-    if (accessTokenByRefreshToken.accessToken) {
+    if (accessTokenByRefreshToken?.accessToken) {
       event.waitUntil(setAccessToken(accessTokenByRefreshToken.accessToken));
       // refresh the page so that new cookies can be accessable
       return NextResponse.redirect(new URL(req.nextUrl.pathname, req.url));

@@ -7,7 +7,7 @@ export const userSchema = z.object({
   password: z.string().min(6).max(100),
   refreshToken: z.string().min(10).max(100).optional(),
   userName: z.string().min(2).max(100),
-  referredBy: z.string().min(2).max(100).optional(),
+  referredBy: z.string().nullish().optional(),
   stats: z.object({
     totalReferred: z.number().min(0).default(0),
     convertedReferred: z.number().min(0).default(0),

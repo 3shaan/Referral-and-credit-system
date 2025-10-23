@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   generateAccessToken(payload: UserJwtTokenPayload): string {
-    return jwt.sign(payload, env.JWT_SECRET, {
+    return jwt.sign({ _id: payload._id, name: payload.name, email: payload.email }, env.JWT_SECRET, {
       expiresIn: "1h",
     });
   }
@@ -75,5 +75,4 @@ export class AuthService {
     const accessToken = this.generateAccessToken(payload);
     return accessToken;
   }
-
 }
