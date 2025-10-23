@@ -1,8 +1,11 @@
 import Link from 'next/link';
+import { Activity } from 'react';
+
+import { getCurrentUser } from '@/action/users';
+
 import MobileMenu from './navbar/mobile-menu';
 import MobileMenuButton from './navbar/mobile-menu-button';
-import { getCurrentUser } from '@/action/users';
-import { Activity } from 'react';
+import NavbarCart from './navbar/nav-bar-cart';
 
 export default async function Navbar() {
   const navItems = [
@@ -10,7 +13,7 @@ export default async function Navbar() {
     { label: 'Products', href: '#products' },
     { label: 'Referrals', href: '#' },
   ];
-  const authUser = await getCurrentUser()
+  const authUser = await getCurrentUser();
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -30,17 +33,17 @@ export default async function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Activity mode={authUser?._id ? "hidden" : "visible"}>
+            <NavbarCart />
+            <Activity mode={authUser?._id ? 'hidden' : 'visible'}>
               <Link href="/signin">
                 <button type="button" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Sign In</button>
               </Link>
             </Activity>
-            <Activity mode={authUser?._id ? "visible" : "hidden"}>
+            <Activity mode={authUser?._id ? 'visible' : 'hidden'}>
               <Link href="/dashboard">
                 <button type="button" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Dashboard</button>
               </Link>
             </Activity>
-
 
           </div>
 

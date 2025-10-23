@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import useMobileNavbarToggle from "@/hooks/mobile-navbar-toggle"
+import useMobileNavbarToggle from '@/hooks/mobile-navbar-toggle';
 
 export default function MobileMenuButton() {
-  const { toggle } = useMobileNavbarToggle()
+  const { toggle } = useMobileNavbarToggle();
   return (
     <button
       type="button"
@@ -14,6 +14,5 @@ export default function MobileMenuButton() {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </button>
-  )
-
+  );
 }
