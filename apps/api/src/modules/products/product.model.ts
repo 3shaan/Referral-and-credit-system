@@ -8,6 +8,7 @@ const productSchema = new Schema<Product & Document>({
   description: { type: String, required: true },
   category: { type: String, required: true },
   price: { type: Number, required: true, min: 0, max: 10000 },
+  image: { type: String, required: false },
 }, {
   timestamps: true,
 });

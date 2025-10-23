@@ -6,6 +6,7 @@ export const productSchema = z.object({
   description: z.string().min(10).max(500),
   category: z.string().min(2).max(100),
   price: z.coerce.number().min(0).max(10000),
+  image: z.url().optional(),
 });
 
 export const createProductSchema = productSchema.omit({ _id: true });
