@@ -2,7 +2,6 @@
   "name": "api",
   "type": "module",
   "version": "1.0.0",
-  "packageManager": "pnpm@10.11.0",
   "description": "",
   "author": "",
   "license": "ISC",
@@ -10,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "build": "tsx build src/index.ts",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
