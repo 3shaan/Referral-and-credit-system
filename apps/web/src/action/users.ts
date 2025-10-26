@@ -14,3 +14,11 @@ export async function getCurrentUser(): Promise<IUser> {
   // }
   return authUser.data as IUser;
 }
+
+export async function getAllUsers(): Promise<IUser[]> {
+  const cookie = await cookies();
+  const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/users`, { credentials: 'include', headers: { Authorization: `Bearer ${cookie.get('accessToken')?.value}` } });
+  const users = await res.json();
+  console.log('Users:', users);
+  return users.data as IUser[];
+}
