@@ -1,7 +1,9 @@
-import { z } from "zod";
+import { z } from "./zod-extends";
+
+
 export const userSchema = z.object({
-  _id: z.string().regex(/^[0-9a-f]{24}$/),
-  email: z.email(),
+  _id: z.string().regex(/^[0-9a-f]{24}$/).openapi({ example: '64b9b9b9b9b9b9b9b9b9b9b9', description: 'ID of the user' }),
+  email: z.email().openapi({ example: 'example@example.com', description: 'Email of the user' }),
   name: z.string().min(2).max(100),
   mobile: z.string().min(10).max(15).optional(),
   password: z.string().min(6).max(100),
@@ -15,7 +17,7 @@ export const userSchema = z.object({
   credit: z.coerce.number().default(0),
   createdAt: z.date().default(new Date()),
   updatedAt: z.date().default(new Date()),
-});
+}).openapi("user", { description: 'User schema', })
 
 export const createUser = userSchema.omit({ _id: true, refreshToken: true, credit: true });
 

@@ -1,0 +1,31 @@
+import type { OpenAPIDefinitions } from "@asteasolutions/zod-to-openapi/dist/openapi-registry";
+
+import {
+  OpenApiGeneratorV3,
+} from "@asteasolutions/zod-to-openapi";
+import { Router } from "express";
+import swaggerUi from "swagger-ui-express";
+
+import { userRegistry } from "@/modules/users/user.swagger";
+
+const allDefinitions: OpenAPIDefinitions[] = [
+  ...userRegistry.definitions,
+];
+const generator = new OpenApiGeneratorV3(allDefinitions);
+
+const openApiDocument = generator.generateDocument({
+  openapi: "3.0.0",
+  info: { title: "Referral and Credit System", version: "1.0.0" },
+  servers: [
+    {
+      url: "http://localhost:8080/api",
+      description: "Development server",
+    },
+  ],
+
+});
+const swaggerRouter = Router();
+
+swaggerRouter.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
+
+export default swaggerRouter;

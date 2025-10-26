@@ -3,3 +3,4 @@ export * from "./referrals";
 export * from "./products";
 export * from "./orders";
 export * from "./order-items";
+export * from "./zod-extends"
