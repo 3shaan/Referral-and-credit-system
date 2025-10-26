@@ -26,7 +26,7 @@ export const updateUser = userSchema.omit({ _id: true, refreshToken: true });
 export const userloginPayload = userSchema.pick({
   email: true,
   password: true,
-});
+}).openapi('UserLoginPayload')
 
 export const userRegisterPayload = userSchema.pick({
   name: true,

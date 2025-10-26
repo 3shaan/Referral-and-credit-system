@@ -1,14 +1,16 @@
-'use client'
-import useMobileSidebarToggle from "@/hooks/mobile-sidebar-toggle";
-import { LogOut, Menu, Search, User } from "lucide-react";
-import { useState } from "react";
+'use client';
+import { LogOut, Menu, Search, User } from 'lucide-react';
+import { useState } from 'react';
+
+import useMobileSidebarToggle from '@/hooks/mobile-sidebar-toggle';
 
 export default function TopBar() {
-  const { toggle } = useMobileSidebarToggle()
+  const { toggle } = useMobileSidebarToggle();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   return (
     <header className="flex items-center justify-between h-16 px-4 bg-white border-b border-gray-200 lg:px-6">
       <button
+        type="button"
         onClick={() => toggle()}
         className="text-gray-500 hover:text-gray-700 lg:hidden"
       >
@@ -30,6 +32,7 @@ export default function TopBar() {
 
         <div className="relative">
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               setProfileMenuOpen(!profileMenuOpen);
@@ -44,12 +47,12 @@ export default function TopBar() {
           {/* Profile dropdown menu */}
           {profileMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-              <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              <button type="button" className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                 <User className="w-4 h-4 mr-3" />
                 Profile
               </button>
               <hr className="my-1 border-gray-200" />
-              <button className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+              <button type="button" className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
                 <LogOut className="w-4 h-4 mr-3" />
                 Logout
               </button>
@@ -58,5 +61,5 @@ export default function TopBar() {
         </div>
       </div>
     </header>
-  )
+  );
 }

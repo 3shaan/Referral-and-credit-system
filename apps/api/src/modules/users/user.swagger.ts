@@ -10,6 +10,7 @@ userRegistry.registerPath({
   method: "get",
   path: "/users",
   tags: ["Users"],
+  security: [{ cookieAuth: [] }],
   responses: {
     ...ApiResponse.success(userSchema),
     ...ApiResponse.error(),

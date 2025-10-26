@@ -27,13 +27,17 @@ export class ApiResponse {
     schema: ZodType,
     status: number = HttpStatus.OK,
     description: string = "",
+    message: string = "Operation successful",
   ) {
+    if (!status) {
+      status = HttpStatus.OK;
+    }
     return {
       [status]: {
         description,
         content: {
           "application/json": {
-            schema: this.buildResponse(schema, status, true, "Operation successful", z.null().optional().openapi({ example: null })),
+            schema: this.buildResponse(schema, status, true, message, z.null().optional().openapi({ example: null })),
           },
         },
       },
