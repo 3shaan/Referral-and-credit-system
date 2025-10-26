@@ -8,6 +8,7 @@ import { Router } from "express";
 import swaggerUi from "swagger-ui-express";
 
 import { authRegistry } from "@/modules/auth/auth.swagger";
+import { orderRegistry } from "@/modules/orders/order.swagger";
 import { productRegistry } from "@/modules/products/product.swagger";
 import { userRegistry } from "@/modules/users/user.swagger";
 
@@ -23,6 +24,7 @@ const allDefinitions: OpenAPIDefinitions[] = [
   ...userRegistry.definitions,
   ...authRegistry.definitions,
   ...productRegistry.definitions,
+  ...orderRegistry.definitions,
 ];
 const generator = new OpenApiGeneratorV3(allDefinitions);
 
