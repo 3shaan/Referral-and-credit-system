@@ -3,12 +3,12 @@ import type { Request, Response } from "express";
 import { createUser } from "@repo/validation";
 import bcrypt from "bcrypt";
 
+import type { UserJwtTokenPayload } from "@/types/payload";
+
 import { BaseController } from "@/lib/core/base-controller";
+import { UnauthorizedException } from "@/lib/exception";
 
 import type { UserService } from "./user.service";
-import { UserJwtTokenPayload } from "@/types/payload";
-import { th } from "zod/v4/locales";
-import { UnauthorizedException } from "@/lib/exception";
 
 export class UserController extends BaseController {
   constructor(private readonly userService: UserService) {
@@ -51,13 +51,12 @@ export class UserController extends BaseController {
     }
   };
 
-
   public me = async (req: Request, res: Response): Promise<void> => {
     try {
       if (!req?.user) {
-        throw new UnauthorizedException("Unauthorized user")
+        throw new UnauthorizedException("Unauthorized user");
       }
-      const userData = req.user as UserJwtTokenPayload
+      const userData = req.user as UserJwtTokenPayload;
       const user = await this.userService.findById(userData._id);
 
       res.success(user, 200, "User retrieved successfully");
@@ -65,5 +64,11 @@ export class UserController extends BaseController {
     catch (error) {
       res.error(error, 500);
     }
+  };
+
+  getUserByIdWithReferrerData = async (req: Request) => {
+    const { id } = req.params;
+
+    return this.userService.findOneByIdWithReferrer(id);
   };
 }

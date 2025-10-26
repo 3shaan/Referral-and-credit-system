@@ -88,5 +88,15 @@ export class UserService extends BaseService {
     ).exec();
   }
 
-
+  findOneByIdWithReferrer(id: string): Promise<IUser | null> {
+    return UserModel.findById(id).populate({
+      path: "referrals",
+      match: { referrerId: id },
+      populate: {
+        path: "referrer",
+        model: "User",
+        select: "userName email",
+      },
+    }).exec();
+  }
 }

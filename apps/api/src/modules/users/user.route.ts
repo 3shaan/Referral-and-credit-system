@@ -18,4 +18,8 @@ userRouter
   .get(userController.getAllUsers)
   .post(userController.createUser);
 
+userRouter
+  .route("/users/:id")
+  .get(userController.getUserByIdWithReferrerData);
+
 export default userRouter;
