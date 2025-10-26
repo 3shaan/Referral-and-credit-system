@@ -9,8 +9,8 @@ const authRoute = Router();
 
 const authController = new AuthController(new AuthService(new UserService(new ReferralService())));
 
-authRoute.use("/auth/login", authController.login);
-authRoute.use("/auth/register", authController.register);
-authRoute.use("/auth/refresh-token", authController.accessTokenRevalidate);
+authRoute.post("/auth/login", authController.login);
+authRoute.post("/auth/register", authController.register);
+authRoute.post("/auth/refresh-token", authController.accessTokenRevalidate);
 
 export default authRoute;
