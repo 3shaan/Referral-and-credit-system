@@ -2,6 +2,7 @@
   "name": "@repo/validation",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "dev": "tsup src/index.ts --watch",
     "build": "tsup src/index.ts"
@@ -19,11 +20,13 @@
     "tsup": "^8.5.0"
   },
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   }
 }
