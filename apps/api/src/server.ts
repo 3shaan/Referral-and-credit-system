@@ -16,7 +16,10 @@ export function createServer(): Express {
     .use(express.json())
     .use(cors())
     .use(cookieParser())
-    .use(httpLogger);
+    .use(httpLogger)
+    .get("/", (req, res) => {
+      res.send("server is running....");
+    });
 
   return app;
 }
