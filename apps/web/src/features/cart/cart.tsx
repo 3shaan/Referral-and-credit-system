@@ -3,7 +3,7 @@ import OrderNowButton from './order-now-button';
 
 export default function CartPage() {
   return (
-    <section className=" mt-20  max-[1200px]:pt-[70px]">
+    <section className=" mt-20  max-[1200px]:pt-[70px] ">
       <div className="flex flex-wrap justify-between relative items-center mx-auto min-[1600px]:max-w-[1500px] min-[1400px]:max-w-[1320px] min-[1200px]:max-w-[1140px] min-[992px]:max-w-[960px] min-[768px]:max-w-[720px] min-[576px]:max-w-[540px]">
         <div className="flex flex-wrap w-full ">
           <div className="w-full px-3">

@@ -1,12 +1,11 @@
 'use client';
-import { LogOut, Menu, Search, User } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, Search } from 'lucide-react';
 
+import UserDropdown from '@/components/user-dropdown';
 import useMobileSidebarToggle from '@/hooks/mobile-sidebar-toggle';
 
 export default function TopBar() {
   const { toggle } = useMobileSidebarToggle();
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   return (
     <header className="flex items-center justify-between h-16 px-4 bg-white border-b border-gray-200 lg:px-6">
       <button
@@ -30,35 +29,7 @@ export default function TopBar() {
 
       <div className="flex items-center space-x-4">
 
-        <div className="relative">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setProfileMenuOpen(!profileMenuOpen);
-            }}
-            className="flex items-center space-x-2"
-          >
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-              <User className="w-5 h-5 text-white" />
-            </div>
-          </button>
-
-          {/* Profile dropdown menu */}
-          {profileMenuOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-              <button type="button" className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                <User className="w-4 h-4 mr-3" />
-                Profile
-              </button>
-              <hr className="my-1 border-gray-200" />
-              <button type="button" className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                <LogOut className="w-4 h-4 mr-3" />
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
+        <UserDropdown />
       </div>
     </header>
   );

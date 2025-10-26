@@ -46,6 +46,20 @@ export default antfu(
         case: 'kebabCase',
         ignore: ['README.md'],
       }],
+      'jsx-a11y/no-static-element-interactions': [
+        'error',
+        {
+          handlers: [
+            'onClick',
+            'onMouseDown',
+            'onMouseUp',
+            'onKeyPress',
+            'onKeyDown',
+            'onKeyUp',
+          ],
+          allowExpressionValues: true,
+        },
+      ],
     },
   },
 

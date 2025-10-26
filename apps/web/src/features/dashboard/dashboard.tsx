@@ -1,19 +1,14 @@
-'use client'
-import { useState } from 'react';
-import { Menu, X, Home, Users, Settings, BarChart3, FileText, Bell, Search, User, LogOut } from 'lucide-react';
-import SideBar from './side-bar';
 import MobileSidebar from './mobile-sidebar';
+import SideBar from './side-bar';
 import TopBar from './top-bar';
 
 export default function Dashboard() {
-
-
   return (
-    <div className="flex h-screen bg-gray-50" >
+    <div className="flex h-screen bg-gray-50">
       <SideBar />
       <MobileSidebar />
 
-      <div className="flex flex-col flex-1 overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div className="flex flex-col flex-1 overflow-hidden">
 
         <TopBar />
 
