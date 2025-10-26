@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "./zod-extends";
 
 export const productSchema = z.object({
   _id: z.string().regex(/^[0-9a-f]{24}$/),
@@ -7,7 +7,7 @@ export const productSchema = z.object({
   category: z.string().min(2).max(100),
   price: z.coerce.number().min(0).max(10000),
   image: z.url().optional(),
-});
+}).openapi("product")
 
 export const createProductSchema = productSchema.omit({ _id: true });
 
