@@ -11,3 +11,8 @@ export async function login(email: string, password: string): Promise<ApiRespons
 export async function signup(data: UserRegisterPayload): Promise<ApiResponse<any>> {
   return api.post('/proxy/api/auth/register', data);
 }
+
+// logout
+export async function logout(): Promise<ApiResponse<any>> {
+  return api.post('/proxy/api/auth/logout');
+}

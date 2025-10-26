@@ -75,4 +75,8 @@ export class AuthService {
     const accessToken = this.generateAccessToken(payload);
     return accessToken;
   }
+
+  async logout(userId: string) {
+    return this.userService.removeRefreshToken(userId);
+  }
 }

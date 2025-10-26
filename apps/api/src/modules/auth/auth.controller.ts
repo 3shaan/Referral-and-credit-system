@@ -75,4 +75,16 @@ export class AuthController {
       res.error(error);
     }
   };
+
+  logout = async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    if (!userId) {
+      throw new UnauthorizedException("User not found");
+    }
+    await this.authService.logout(userId);
+
+    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken");
+    return "logout successful";
+  };
 }

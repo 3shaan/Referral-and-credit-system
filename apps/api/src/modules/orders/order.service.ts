@@ -27,13 +27,22 @@ export class OrderService extends BaseService {
         newOrderData.isFirstOrder = true;
 
         // update credit of user
-        await UserModel.updateOne({ _id: rest.userId }, { $inc: { credit: 2 } }, { session });
+
+        await UserModel.updateOne(
+          { _id: rest.userId },
+          {
+            $inc: {
+              credit: 2,
+            },
+          },
+          { session },
+        );
 
         // update the referral status
         const referral = await ReferralModel.findOneAndUpdate({ referredId: rest.userId }, { status: "converted" }, { session });
         // update the referrer credit
         if (referral) {
-          await UserModel.updateOne({ _id: referral.referrerId }, { $inc: { credit: 2 } }, { session });
+          await UserModel.updateOne({ _id: referral.referrerId }, { $inc: { "credit": 2, "stats.convertedReferred": 1 } }, { session });
         }
       }
 

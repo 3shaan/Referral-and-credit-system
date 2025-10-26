@@ -7,7 +7,7 @@ import useMobileSidebarToggle from '@/hooks/mobile-sidebar-toggle';
 export default function TopBar() {
   const { toggle } = useMobileSidebarToggle();
   return (
-    <header className="flex items-center justify-between h-16 px-4 bg-white border-b border-gray-200 lg:px-6">
+    <header className="flex items-center justify-between h-20 px-4 bg-gray-50 border-b border-gray-200 lg:px-6">
       <button
         type="button"
         onClick={() => toggle()}

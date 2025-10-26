@@ -99,4 +99,12 @@ export class UserService extends BaseService {
       },
     }).exec();
   }
+
+  removeRefreshToken(userId: string): Promise<IUser | null> {
+    return UserModel.findByIdAndUpdate(
+      userId,
+      { refreshToken: null },
+      { new: true },
+    ).exec();
+  }
 }

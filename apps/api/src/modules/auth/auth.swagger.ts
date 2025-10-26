@@ -64,3 +64,18 @@ authRegistry.registerPath({
     ...ApiResponse.error(),
   },
 });
+
+// logout
+
+authRegistry.registerPath({
+  method: "get",
+  tags: ["Auth"],
+  path: "/auth/logout",
+  summary: "Logout",
+  description: "Logout",
+  responses: {
+    ...ApiResponse.success(z.string().min(1).max(255), 0, "SUCCESS", "Logout successful"),
+    ...ApiResponse.error(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "Unauthorized"),
+    ...ApiResponse.error(),
+  },
+});
