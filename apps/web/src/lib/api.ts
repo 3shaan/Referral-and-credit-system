@@ -60,6 +60,7 @@ export async function apiCall<T = any>(
       ...fetchOptions,
       headers: defaultHeaders,
       signal: controller.signal,
+      credentials: 'include',
     });
 
     // Clear timeout
