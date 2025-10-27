@@ -21,7 +21,8 @@
         "MONGO_URI",
         "JWT_SECRET",
         "PORT",
-        "NEXT_PUBLIC_API_HOST"
+        "NEXT_PUBLIC_API_HOST",
+        "API_URL"
       ]
     },
     "test": {
@@ -44,7 +45,8 @@
         "MONGO_URI",
         "JWT_SECRET",
         "PORT",
-        "NEXT_PUBLIC_API_HOST"
+        "NEXT_PUBLIC_API_HOST",
+        "API_URL"
       ]
     },
     "dev": {

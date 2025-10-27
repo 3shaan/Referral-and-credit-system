@@ -19,8 +19,9 @@ const EnvSchema = z.object({
   NODE_ENV: z.string().default("development"),
   PORT: z.coerce.number().default(3000),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
-  MONGO_URI: z.string().url(),
+  MONGO_URI: z.url(),
   JWT_SECRET: z.string().min(5).max(256),
+  API_URL: z.url().default("http://localhost:8080"),
 });
 
 type Env = z.infer<typeof EnvSchema>;

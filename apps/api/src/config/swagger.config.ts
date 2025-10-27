@@ -7,6 +7,7 @@ import {
 import { Router } from "express";
 import swaggerUi from "swagger-ui-express";
 
+import env from "@/env";
 import { authRegistry } from "@/modules/auth/auth.swagger";
 import { orderRegistry } from "@/modules/orders/order.swagger";
 import { productRegistry } from "@/modules/products/product.swagger";
@@ -33,7 +34,7 @@ const openApiDocument = generator.generateDocument({
   info: { title: "Referral and Credit System", version: "1.0.0" },
   servers: [
     {
-      url: "http://localhost:8080/api",
+      url: env.NODE_ENV === "development" ? "http://localhost:8080/api" : `${env.API_URL}/api`,
       description: "Development server",
     },
   ],
