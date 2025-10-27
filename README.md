@@ -92,6 +92,20 @@ The backend exposes a detailed Swagger UI for testing and exploring API endpoint
 
 ---
 
+## 🔐 Test Accounts (dummy)
+
+You can use the following test accounts for manual testing:
+
+| Role  | Email           | Password |
+|-------|-----------------|----------|
+| Refer User | `admin@admin.com`  | `123456` |
+| Reffered User  | `admin2@admin.com` | `123456` |
+
+> ⚠️ These are dummy accounts for testing only.
+
+
+---
+
 ## 📜 Backend Diagram
 
 ```mermaid
