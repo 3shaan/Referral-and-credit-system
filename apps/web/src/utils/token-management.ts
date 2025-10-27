@@ -12,7 +12,16 @@ export async function setAccessToken(accessToken: string) {
     httpOnly: true,
     secure: true,
     sameSite: 'strict',
-    maxAge: 15 * 60, // 15 m, in nextjs its count in seconds
+    maxAge: 60 * 60, // 15 m, in nextjs its count in seconds
+  });
+}
+
+export async function setRefreshToken(refreshToken: string) {
+  (await cookies()).set('refreshToken', refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+    maxAge: 60 * 60 * 24 * 7, // 7 days, in nextjs its count in seconds
   });
 }
 
@@ -30,6 +39,5 @@ export async function getAccessTokenByRefreshToken() {
     credentials: 'include',
   });
   const data = await response.json();
-  console.log(data);
   return data.data;
 }

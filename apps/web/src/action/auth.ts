@@ -1,15 +1,25 @@
+'use server';
 import type { UserRegisterPayload } from '@repo/validation';
 
 import type { ApiResponse } from '@/lib/api';
 
 import { api } from '@/lib/api';
+import { setAccessToken, setRefreshToken } from '@/utils/token-management';
 
 export async function login(email: string, password: string): Promise<ApiResponse<any>> {
-  return api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, { email, password });
+  const response = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, { email, password });
+  await setRefreshToken(response.data.refreshToken);
+  await setAccessToken(response.data.accessToken);
+
+  return response;
 }
 
 export async function signup(data: UserRegisterPayload): Promise<ApiResponse<any>> {
-  return api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data);
+  const response = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data);
+  await setAccessToken(response.data.accessToken);
+  await setRefreshToken(response.data.refreshToken);
+
+  return response;
 }
 
 // logout
