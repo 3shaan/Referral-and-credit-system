@@ -5,7 +5,10 @@ import AddToCartButton from '@/components/products/add-to-cart-button';
 
 export async function ProductSection() {
   const productsRes = await getAllProducts();
-  const { data: products } = productsRes;
+  const { data: products, success } = productsRes;
+  if (!success) {
+    return <div>Error fetching products</div>;
+  }
   return (
     <section id="products" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
