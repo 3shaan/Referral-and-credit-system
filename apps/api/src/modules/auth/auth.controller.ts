@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import { userloginPayload, userRegisterPayload } from "@repo/validation";
 import bcrypt from "bcrypt";
 
+import env from "@/env";
 import { UnauthorizedException } from "@/lib/exception";
 import { HttpStatus } from "@/lib/http";
 
@@ -28,12 +29,15 @@ export class AuthController {
       res.cookie("refreshToken", token.refreshToken, {
         httpOnly: true,
         maxAge: 3600000 * 24 * 15, // 15 days
-
+        secure: env.NODE_ENV === "production",
+        sameSite: "none",
       });
 
       res.cookie("accessToken", token.accessToken, {
         httpOnly: true,
         maxAge: 3600000, // 1 hour
+        secure: env.NODE_ENV === "production",
+        sameSite: "none",
       });
       res.success(token.user, HttpStatus.OK, "Register successful");
     }
@@ -48,8 +52,8 @@ export class AuthController {
       const token = await this.authService.login(email, password);
 
       // TODO : add more configuration in cookies when publish
-      res.cookie("refreshToken", token.refreshToken, { httpOnly: true, maxAge: 3600000 * 24 * 15 }); // 15 days
-      res.cookie("accessToken", token.accessToken, { httpOnly: true, maxAge: 3600000 }); // 1 hour
+      res.cookie("refreshToken", token.refreshToken, { httpOnly: true, maxAge: 3600000 * 24 * 15, secure: env.NODE_ENV === "production", sameSite: "none" }); // 15 days
+      res.cookie("accessToken", token.accessToken, { httpOnly: true, maxAge: 3600000, secure: env.NODE_ENV === "production", sameSite: "none" }); // 1 hour
 
       res.success(token.user, HttpStatus.OK, "Login successful");
     }
@@ -67,7 +71,7 @@ export class AuthController {
       const accessToken = this.authService.revalidateAccessTokenByRefreshToken(refreshToken);
 
       // TODO : add more configuration in cookies when publish
-      res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 3600000 /* 1hr */ });
+      res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 3600000 /* 1hr */, secure: env.NODE_ENV === "production", sameSite: "none" });
 
       res.success({ accessToken }, HttpStatus.OK, "Access token revalidated");
     }

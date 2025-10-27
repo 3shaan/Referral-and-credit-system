@@ -14,7 +14,10 @@ export function createServer(): Express {
     .use(morgan("dev"))
     .use(express.urlencoded({ extended: true }))
     .use(express.json())
-    .use(cors())
+    .use(cors({
+      origin: ["http://localhost:3000", "https://referral-and-credit-system-web.onrender.com"],
+      credentials: true,
+    }))
     .use(cookieParser())
     .use(httpLogger)
     .get("/", (req, res) => {
