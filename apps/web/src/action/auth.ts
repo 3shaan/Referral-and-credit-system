@@ -1,6 +1,8 @@
 'use server';
 import type { UserRegisterPayload } from '@repo/validation';
 
+import { cookies } from 'next/headers';
+
 import type { ApiResponse } from '@/lib/api';
 
 import { api } from '@/lib/api';
@@ -24,5 +26,10 @@ export async function signup(data: UserRegisterPayload): Promise<ApiResponse<any
 
 // logout
 export async function logout(): Promise<ApiResponse<any>> {
-  return api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
+  const cookie = await cookies();
+  const response = await api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
+  cookie.delete('refreshToken');
+  cookie.delete('accessToken');
+
+  return response;
 }
