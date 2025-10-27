@@ -37,7 +37,15 @@
     },
     "start": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "NODE_ENV",
+        "LOG_LEVEL",
+        "MONGO_URI",
+        "JWT_SECRET",
+        "PORT",
+        "NEXT_PUBLIC_API_HOST"
+      ]
     },
     "dev": {
       "cache": false,
