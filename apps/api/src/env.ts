@@ -5,8 +5,17 @@ import { expand } from "dotenv-expand";
 import process from "node:process";
 import { z } from "zod";
 
-expand(config());
+// Load .env only in development
+if (process.env.NODE_ENV !== "production") {
+  try {
+    expand(config());
+  }
+  catch (e) {
+    console.warn("Skipping .env loading: file missing or unreadable.");
+  }
+}
 
+// Define schema for environment variables
 const EnvSchema = z.object({
   NODE_ENV: z.string().default("development"),
   PORT: z.coerce.number().default(3000),
@@ -17,16 +26,15 @@ const EnvSchema = z.object({
 
 type Env = z.infer<typeof EnvSchema>;
 
-// eslint-disable-next-line import/no-mutable-exports
+// Validate and parse environment
 let env: Env;
 
 try {
-  // eslint-disable-next-line   node/no-process-env
   env = EnvSchema.parse(process.env);
 }
 catch (error) {
   const e = error as ZodError;
-  console.error("Invalid ENV. ");
+  console.error("❌ Invalid environment configuration:");
   console.error(e.issues);
   process.exit(1);
 }
